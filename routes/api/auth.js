@@ -28,6 +28,7 @@ module.exports = router;
 // @route    GET api/users
 // @desc     Register route
 // @access   Public
+
 router.post('/',[
     check('email', 'Please include a valid email').isEmail(),
     check(
@@ -74,6 +75,7 @@ router.post('/',[
         console.log(err.message);
         res.status(500).send('Server error')
     }
+
 
 
     
