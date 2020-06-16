@@ -17,16 +17,17 @@ router.get('/', auth, async (req, res) => {
         res.json(user)
     } catch (err) {
         console.log(err.message);
-        res.status(500).send('Sevrer Error')
+        res.status(500).send('Server Error')
     }
 });
+
 
 module.exports = router;
 
 
 
-// @route    GET api/users
-// @desc     Register route
+// @route    GET api/auth
+// @desc     Authenticate User and get token
 // @access   Public
 
 router.post('/',[
@@ -71,12 +72,9 @@ router.post('/',[
         });
 
         
-    } catch (error) {
-        console.log(err.message);
+    } catch (err) {
+        console.errors(err.message);
         res.status(500).send('Server error')
     }
-
-
-
     
 });

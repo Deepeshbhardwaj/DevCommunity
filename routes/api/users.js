@@ -76,8 +76,8 @@ router.post('/',[check('name', 'Name is Required')
         });
 
         
-    } catch (error) {
-        console.log(err.message);
+    } catch (err) {
+        console.error(err.message);
         res.status(500).send('Server error')
     }
 

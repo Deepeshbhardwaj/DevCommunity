@@ -6,6 +6,7 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator')
 const Profile = require('../../models/Profile');
 const User = require('../../models/User')
+const Post = require('../../models/Posts');
 
 
 // @route    GET api/profile/me
@@ -17,6 +18,7 @@ router.get('/me',auth, async(req, res) => {
         if(!profile) {
             return res.status(400).json({msg: 'There is no profile for this user'})
         }
+        res.json(profile)
     } catch (err) {
         console.error(err.message)
         res.status(500).send('Server Error')
@@ -29,7 +31,7 @@ router.get('/me',auth, async(req, res) => {
 // @desc     Create Update Profile
 // @access   Private
 
-router.post('/', [auth, [check('status', 'Statua is required')
+router.post('/', [auth, [check('status', 'Status is required')
     .not()
     .isEmpty(),
     check('skills', 'Skills is Required')
@@ -139,6 +141,9 @@ router.get('/user/:user_id', async(req,res) => {
 
 router.delete('/', auth, async(req,res) => {
     try {
+
+        await Post.deleteMany({user: req.user.id});
+
         await Profile.findOneAndRemove({user : req.user.id});
         await User.findOneAndRemove({_id : req.user.id});
 
@@ -211,13 +216,14 @@ router.put('/experience', [auth, [
 // @desc     ADD Profile experience
 // @access   Private
 
-router.delete('/experience/:experience_id', [auth], async(req,res) => {
+router.delete('/experience/:experience_id', auth, async(req,res) => {
 
     try {
 
         const profile = await Profile.findOne({user : req.user.id})
 
         const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.experience_id);
+        console.log(removeIndex)
 
         profile.experience.splice(removeIndex, 1);
 
