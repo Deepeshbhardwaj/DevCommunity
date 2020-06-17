@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://Deepesh_Bhardwaj:helloworld@cluster0-bpfkz.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubclientId": "3d347756d9a20bc8a2f9",
+  "githubSecret": "11bc6ccc9b7e6e9f36616512cbb4caa5bdb38c7d"
+}
